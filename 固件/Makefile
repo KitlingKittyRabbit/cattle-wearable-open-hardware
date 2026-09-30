@@ -3,7 +3,7 @@ OBJCOPY = arm-none-eabi-objcopy
 SIZE = arm-none-eabi-size
 CFLAGS = -mcpu=cortex-m0plus -mthumb -Wall -O2 -g3 \
          -ffunction-sections -fdata-sections \
-         -fno-builtin \
+         -ffreestanding -fno-builtin -fno-tree-loop-distribute-patterns \
          -I源码
 
 LDFLAGS = -mcpu=cortex-m0plus -mthumb \
@@ -14,7 +14,7 @@ LDFLAGS = -mcpu=cortex-m0plus -mthumb \
 
 BUILD = 编译输出
 
-SRCS = 源码/main.c
+SRCS = 源码/main.c 源码/runtime.c
 OBJS = $(SRCS:源码/%.c=$(BUILD)/%.o)
 
 TARGET = $(BUILD)/firmware
