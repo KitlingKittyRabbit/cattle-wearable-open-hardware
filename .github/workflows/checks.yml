@@ -1,0 +1,47 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  host-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run Python regression tests
+        working-directory: 工具
+        run: |
+          python test_bin2csv.py
+          python -m unittest test_nf04_monitor.py
+          python test_nf_ack.py
+      - name: Run host-side C regression tests
+        working-directory: 工具
+        run: |
+          set -e
+          mkdir -p /tmp/cattle-host-tests
+          for source in \
+            test_issue3_logic.c \
+            test_issue3_diagnostics.c \
+            test_issue3_long_capture.c \
+            test_issue3_async_long_capture.c \
+            test_issue3_capture_integration.c \
+            test_readme_storage.c
+          do
+            binary="/tmp/cattle-host-tests/${source%.c}"
+            gcc -std=c11 -O2 -Wall -Wextra -I../固件/源码 "$source" -o "$binary"
+            "$binary"
+          done
+
+  firmware-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi
+      - run: make -C 固件

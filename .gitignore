@@ -1,0 +1,57 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+.env
+
+# === IDE / 编辑器 ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# === 临时/备份文件 ===
+*.bak
+*.tmp
+*.log
+
+# === 编译产物 ===
+固件/编译输出/
+
+# === 不进入 Git 的归档文件 ===
+归档/
+
+# === 可下载的安装包/引用文件 ===
+*.AppImage
+*.flatpakref
+
+# === PDF / Office 文档 ===
+*.pdf
+!原理图/*.pdf
+*.pptx
+*.ppt
+*.ptx.pptx
+*.doc
+*.docx
+
+# === 3D 模型中间产物 ===
+*.stl
+!3D打印模型/外壳/上盖-BodyPad002.stl
+*.step
+*.FCBak
+
+# === CSV 默认排除，但保留 BOM ===
+*.csv
+!BOM_*.csv
+
+# === NF-04 电脑端运行输出（只保存在本机数据目录） ===
+nf04-*.csv
+nf04-*.log
+nf04-*.jsonl
+*.jsonl
